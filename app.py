@@ -1,9 +1,11 @@
 from flask import Flask, render_template, request,redirect,url_for,flash
-from db import get_db_connection
+from db import get_db_connection, init_db
 
 app = Flask(__name__)
 app.secret_key ="secret123"   # Required for flash messages
 
+# Ensure DB is initialized
+# init_db()
 
 
 @app.route("/")
