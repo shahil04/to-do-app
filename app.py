@@ -11,7 +11,8 @@ app.secret_key ="secret123"   # Required for flash messages
 @app.route("/")
 def index():
     connection = get_db_connection()
-    cursor = connection.cursor(dictionary=True)
+    init_db()
+    cursor = connection.cursor()
     
     cursor.execute("SELECT * FROM todos")
     tasks = cursor.fetchall()
@@ -30,7 +31,7 @@ def add_task():
 
     connection = get_db_connection()
     cursor = connection.cursor()
-    cursor.execute("INSERT INTO todos (task) VALUES (%s)", (task,))
+    cursor.execute("INSERT INTO todos (task) VALUES (?)", (task,))
     
     connection.commit()
     cursor.close()
