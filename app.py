@@ -6,7 +6,7 @@ app.secret_key ="secret123"   # Required for flash messages
 
 # Ensure DB is initialized
 # init_db()
-
+# a
 
 @app.route("/")
 def index():

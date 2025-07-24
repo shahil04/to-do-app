@@ -15,3 +15,5 @@ def get_db_connection():
     return connection
 
 db = get_db_connection()  # Call the function with ()
+
+# 
