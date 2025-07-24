@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request,redirect,url_for,flash
-from db import get_db_connection, init_db
+from db import get_db_connection
 
 app = Flask(__name__)
 app.secret_key ="secret123"   # Required for flash messages
@@ -11,8 +11,7 @@ app.secret_key ="secret123"   # Required for flash messages
 @app.route("/")
 def index():
     connection = get_db_connection()
-    init_db()
-    cursor = connection.cursor()
+    cursor = connection.cursor(dictionary=True)
     
     cursor.execute("SELECT * FROM todos")
     tasks = cursor.fetchall()
@@ -31,7 +30,7 @@ def add_task():
 
     connection = get_db_connection()
     cursor = connection.cursor()
-    cursor.execute("INSERT INTO todos (task) VALUES (?)", (task,))
+    cursor.execute("INSERT INTO todos (task) VALUES (%s)", (task,))
     
     connection.commit()
     cursor.close()

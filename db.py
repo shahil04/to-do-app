@@ -1,26 +1,17 @@
-import sqlite3
+import mysql.connector
 
-DB_NAME = "todo.db"
+GCP_PUBLIC_IP = "34.67.229.167"
+DB_USERNAME = "root2"
+DB_PASSWORD = "Azsxdcf123@"
+DB_NAME = "todo_db"
 
 def get_db_connection():
-    connection = sqlite3.connect(DB_NAME)
-    connection.row_factory = sqlite3.Row  # Enable column access by name
-    print("success")
+    connection = mysql.connector.connect(
+        host=GCP_PUBLIC_IP,
+        user=DB_USERNAME,
+        password=DB_PASSWORD,
+        database=DB_NAME
+    )
     return connection
 
-def init_db():
-    connection = get_db_connection()
-    cursor = connection.cursor()
-    cursor.execute(''' 
-        CREATE TABLE IF NOT EXISTS todos (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            task TEXT NOT NULL,
-            status TEXT DEFAULT 'Pending'
-        )
-    ''')
-    connection.commit()
-    connection.close()
-
-# Initialize DB if not exists
-if __name__ == "__main__":
-    init_db()
+db = get_db_connection()  # Call the function with ()
